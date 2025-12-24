@@ -1,1 +1,1 @@
-https://thegem001.github.io/Chess/
+https://thegem001.github.io/Card/
