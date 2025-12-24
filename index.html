@@ -16,115 +16,87 @@
             overflow: hidden;
             text-align: center;
         }
-
         .container {
             background: white;
-            padding: 2rem;
+            padding: 2.5rem;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             max-width: 400px;
             width: 90%;
-            transition: all 0.3s ease;
+            z-index: 10;
         }
-
         h1 { color: #d63384; margin-bottom: 10px; }
-        p { color: #555; line-height: 1.6; }
-
-        .btn-group {
-            margin-top: 25px;
-            position: relative;
-            height: 50px;
-        }
-
+        p { color: #555; }
+        .btn-group { margin-top: 25px; position: relative; height: 60px; }
         button {
             padding: 12px 25px;
             font-size: 1rem;
             border: none;
             border-radius: 25px;
             cursor: pointer;
-            transition: transform 0.2s;
             font-weight: bold;
         }
-
-        #yesBtn {
-            background-color: #4CAF50;
-            color: white;
-            margin-right: 10px;
-        }
-
-        #noBtn {
-            background-color: #f44336;
-            color: white;
-            position: absolute;
-        }
-
+        #yesBtn { background-color: #4CAF50; color: white; }
+        #noBtn { background-color: #f44336; color: white; position: absolute; left: 60%; }
         .hidden { display: none; }
-        
-        #celebration {
-            font-size: 3rem;
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
 
+    <form id="contact-form" action="https://formspree.io/f/xzdpqapq" method="POST" class="hidden">
+        <input type="text" name="name" value="Priyanshi Singh">
+        <input type="email" name="email" value="saqibzahidofficial@gmail.com">
+        <textarea name="message">She clicked YES! She forgives you for being late.</textarea>
+    </form>
+
     <div class="container" id="mainCard">
         <div id="content">
             <h1>Dear Priyanshi Singh,</h1>
-            <p>I know I’m late, and I know your time is precious. I’m truly sorry for keeping you waiting! 🕒</p>
+            <p>I know I’m late, and I'm really sorry for keeping you waiting! 🕒</p>
             <p><strong>Do you forgive me?</strong></p>
             
             <div class="btn-group">
-                <button id="yesBtn" onclick="forgiven()">Yes</button>
+                <button id="yesBtn" onclick="forgiven()">Yes, I do!</button>
                 <button id="noBtn" onmouseover="moveButton()">No</button>
             </div>
         </div>
 
         <div id="successMessage" class="hidden">
-            <h1>Yay! Thank You! ❤️</h1>
-            <p>You are the best, Priyanshi. I promise to be on time (or bring extra snacks) next time!</p>
-            <div id="celebration">🎁✨🌸</div>
+            <h1>Yay! ❤️</h1>
+            <p>You're the best, Priyanshi! I'll see you soon.</p>
+            <div style="font-size: 3rem;">🌸✨🎁</div>
         </div>
     </div>
 
     <script>
         function moveButton() {
             const btn = document.getElementById('noBtn');
-            const x = Math.random() * (window.innerWidth - btn.clientWidth - 50);
-            const y = Math.random() * (window.innerHeight - btn.clientHeight - 50);
-            
+            const x = Math.random() * (window.innerWidth - btn.clientWidth - 20);
+            const y = Math.random() * (window.innerHeight - btn.clientHeight - 20);
             btn.style.position = 'fixed';
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
         }
 
-        function forgiven() {
+        async function forgiven() {
+            // 1. Show the success message immediately
             document.getElementById('content').classList.add('hidden');
             document.getElementById('successMessage').classList.remove('hidden');
             document.body.style.background = "linear-gradient(135deg, #a1ffce 0%, #faffd1 100%)";
+
+            // 2. Send the notification to your email via Formspree
+            const form = document.getElementById('contact-form');
+            const data = new FormData(form);
             
-            // Trigger a little "confetti" effect
-            for(let i=0; i<50; i++) {
-                createEmoji();
+            try {
+                await fetch(form.action, {
+                    method: 'POST',
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                });
+            } catch (error) {
+                console.log("Error sending notification, but she doesn't need to know that!");
             }
-        }
-
-        function createEmoji() {
-            const emoji = document.createElement('div');
-            emoji.innerText = '🌸';
-            emoji.style.position = 'fixed';
-            emoji.style.left = Math.random() * 100 + 'vw';
-            emoji.style.top = '-20px';
-            emoji.style.fontSize = Math.random() * 20 + 10 + 'px';
-            emoji.style.zIndex = '1000';
-            emoji.style.transition = 'transform 3s linear';
-            document.body.appendChild(emoji);
-
-            setTimeout(() => {
-                emoji.style.transform = `translateY(${window.innerHeight + 50}px) rotate(${Math.random() * 360}deg)`;
-            }, 100);
-
-            setTimeout(() => { emoji.remove(); }, 4000);
         }
     </script>
 </body>
