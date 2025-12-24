@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merry Christmas Eve, Priyanshi!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Great+Vibes&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Quicksand', sans-serif;
+            color: white;
+            height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .christmas-font { font-family: 'Mountains of Christmas', cursive; }
+        .cursive-font { font-family: 'Great Vibes', cursive; }
+
+        #snow-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .tree-container {
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .gift {
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .gift:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .gift-open {
+            animation: burst 0.6s forwards;
+        }
+
+        @keyframes burst {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        .message-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center p-4">
+
+    <canvas id="snow-canvas"></canvas>
+
+    <!-- Header Section -->
+    <div class="text-center z-20 mb-8 mt-10">
+        <h2 class="christmas-font text-2xl md:text-3xl text-yellow-300 mb-2">It's a Magical Night...</h2>
+        <h1 class="cursive-font text-5xl md:text-7xl lg:text-8xl text-white drop-shadow-lg">
+            Merry Christmas Eve,<br> 
+            <span class="text-red-400">Priyanshi Singh</span>
+        </h1>
+        <p class="mt-4 text-lg md:text-xl font-light tracking-widest opacity-90">UNWRAP THE MAGIC BELOW</p>
+    </div>
+
+    <!-- Main Scene -->
+    <div class="relative flex flex-col items-center z-20 w-full max-w-4xl">
+        
+        <!-- The Christmas Tree -->
+        <div class="tree-container mb-12">
+            <svg width="200" height="280" viewBox="0 0 200 280" class="md:w-[300px] md:h-[400px]">
+                <!-- Trunk -->
+                <rect x="85" y="240" width="30" height="40" fill="#5D4037" />
+                <!-- Layers -->
+                <path d="M100 20 L30 250 L170 250 Z" fill="#1B5E20" />
+                <path d="M100 50 L40 220 L160 220 Z" fill="#2E7D32" />
+                <path d="M100 80 L50 190 L150 190 Z" fill="#388E3C" />
+                <path d="M100 110 L60 160 L140 160 Z" fill="#43A047" />
+                <!-- Star -->
+                <polygon points="100,5 105,18 118,18 108,27 112,40 100,32 88,40 92,27 82,18 95,18" fill="#FFD700">
+                    <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite" />
+                </polygon>
+                <!-- Decorations -->
+                <circle cx="70" cy="220" r="6" fill="#D32F2F"><animate attributeName="r" values="5;7;5" dur="1.5s" repeatCount="indefinite"/></circle>
+                <circle cx="130" cy="220" r="6" fill="#FBC02D"><animate attributeName="r" values="5;7;5" dur="1.8s" repeatCount="indefinite"/></circle>
+                <circle cx="100" cy="180" r="6" fill="#1976D2"><animate attributeName="r" values="5;7;5" dur="2s" repeatCount="indefinite"/></circle>
+                <circle cx="80" cy="140" r="6" fill="#D32F2F"><animate attributeName="r" values="5;7;5" dur="1.2s" repeatCount="indefinite"/></circle>
+                <circle cx="120" cy="140" r="6" fill="#FBC02D"><animate attributeName="r" values="5;7;5" dur="2.3s" repeatCount="indefinite"/></circle>
+            </svg>
+        </div>
+
+        <!-- Gift Boxes -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 px-4">
+            <div class="gift flex flex-col items-center" onclick="openGift(this, 'May your heart be light and your Eve be bright, Priyanshi!')">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-red-600 rounded-lg relative shadow-xl flex items-center justify-center border-t-4 border-red-400">
+                    <div class="absolute w-full h-2 bg-yellow-400"></div>
+                    <div class="absolute h-full w-2 bg-yellow-400"></div>
+                    <span class="text-white font-bold text-xs uppercase z-10">Open Me</span>
+                </div>
+            </div>
+            <div class="gift flex flex-col items-center" onclick="openGift(this, 'Wishing you a night full of warm cocoa and beautiful dreams.')">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-green-600 rounded-lg relative shadow-xl flex items-center justify-center border-t-4 border-green-400">
+                    <div class="absolute w-full h-2 bg-white"></div>
+                    <div class="absolute h-full w-2 bg-white"></div>
+                    <span class="text-white font-bold text-xs uppercase z-10">Click!</span>
+                </div>
+            </div>
+            <div class="gift flex flex-col items-center" onclick="openGift(this, 'You make the world a bit more magical, Priyanshi.')">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-blue-600 rounded-lg relative shadow-xl flex items-center justify-center border-t-4 border-blue-400">
+                    <div class="absolute w-full h-2 bg-red-400"></div>
+                    <div class="absolute h-full w-2 bg-red-400"></div>
+                    <span class="text-white font-bold text-xs uppercase z-10">Secret</span>
+                </div>
+            </div>
+            <div class="gift flex flex-col items-center" onclick="openGift(this, 'Cheers to a wonderful Christmas Eve with your loved ones!')">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-yellow-600 rounded-lg relative shadow-xl flex items-center justify-center border-t-4 border-yellow-400">
+                    <div class="absolute w-full h-2 bg-green-500"></div>
+                    <div class="absolute h-full w-2 bg-green-500"></div>
+                    <span class="text-white font-bold text-xs uppercase z-10">Joy</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Display Area -->
+    <div id="message-container" class="fixed inset-0 pointer-events-none z-50 flex items-center justify-center p-6 opacity-0 transition-opacity duration-500">
+        <div class="message-card p-8 rounded-2xl max-w-md w-full text-center pointer-events-auto">
+            <p id="revealed-text" class="text-2xl cursive-font leading-relaxed"></p>
+            <button onclick="closeMessage()" class="mt-6 px-6 py-2 bg-white text-red-600 rounded-full font-bold hover:bg-red-50 transition-colors">Close</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="fixed bottom-6 left-0 right-0 text-center z-20">
+        <p class="text-sm opacity-60 tracking-widest uppercase">From the heart of</p>
+        <p class="cursive-font text-3xl md:text-4xl text-yellow-200 mt-1">Saqib Zahid</p>
+    </div>
+
+    <script>
+        // Snowfall Animation Logic
+        const canvas = document.getElementById('snow-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, snowflakes;
+
+        function initSnow() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            snowflakes = [];
+            for (let i = 0; i < 150; i++) {
+                snowflakes.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 3 + 1,
+                    speed: Math.random() * 2 + 0.5,
+                    wind: Math.random() * 1 - 0.5
+                });
+            }
+        }
+
+        function drawSnow() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            ctx.beginPath();
+            snowflakes.forEach(f => {
+                ctx.moveTo(f.x, f.y);
+                ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
+                f.y += f.speed;
+                f.x += f.wind;
+                if (f.y > height) f.y = -10;
+                if (f.x > width) f.x = 0;
+                if (f.x < 0) f.x = width;
+            });
+            ctx.fill();
+            requestAnimationFrame(drawSnow);
+        }
+
+        // Interaction Logic
+        function openGift(element, message) {
+            // Add burst effect
+            element.classList.add('gift-open');
+            
+            // Show message after a tiny delay
+            setTimeout(() => {
+                document.getElementById('revealed-text').innerText = message;
+                document.getElementById('message-container').classList.remove('opacity-0');
+                document.getElementById('message-container').classList.add('opacity-100');
+                
+                // Reset gift visibility for multiple opens
+                setTimeout(() => {
+                    element.classList.remove('gift-open');
+                }, 1000);
+            }, 300);
+            
+            createConfetti(element);
+        }
+
+        function closeMessage() {
+            document.getElementById('message-container').classList.remove('opacity-100');
+            document.getElementById('message-container').classList.add('opacity-0');
+        }
+
+        function createConfetti(el) {
+            const rect = el.getBoundingClientRect();
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'sparkle';
+                particle.style.left = (rect.left + rect.width / 2) + 'px';
+                particle.style.top = (rect.top + rect.height / 2) + 'px';
+                particle.style.backgroundColor = ['#FFD700', '#FF0000', '#00FF00', '#FFFFFF'][Math.floor(Math.random() * 4)];
+                document.body.appendChild(particle);
+
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 100 + 50;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+
+                particle.animate([
+                    { transform: 'translate(0,0) scale(1)', opacity: 1 },
+                    { transform: `translate(${tx}px, ${ty}px) scale(0)`, opacity: 0 }
+                ], {
+                    duration: 1000,
+                    easing: 'cubic-bezier(0, .9, .57, 1)'
+                }).onfinish = () => particle.remove();
+            }
+        }
+
+        // Mouse Trail Sparkles
+        document.addEventListener('mousemove', (e) => {
+            if (Math.random() > 0.9) {
+                const s = document.createElement('div');
+                s.className = 'sparkle';
+                s.style.left = e.pageX + 'px';
+                s.style.top = e.pageY + 'px';
+                s.style.boxShadow = '0 0 5px white';
+                document.body.appendChild(s);
+                s.animate([
+                    { transform: 'translateY(0) scale(1)', opacity: 1 },
+                    { transform: 'translateY(20px) scale(0)', opacity: 0 }
+                ], 1000).onfinish = () => s.remove();
+            }
+        });
+
+        window.addEventListener('resize', initSnow);
+        window.onload = () => {
+            initSnow();
+            drawSnow();
+        };
+    </script>
+</body>
+</html>
+
